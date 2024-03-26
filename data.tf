@@ -23,5 +23,5 @@ data "aws_subnet" "private_subnets"{
 }
 
 data "aws_security_group" "EKS-Security-Group"{
-  name = "EKS-Security-Group"
+  name = "eks-cluster-sg"
 }
