@@ -30,4 +30,5 @@ resource "aws_lb_listener" "my_listener" {
 resource "aws_autoscaling_attachment" "eks_node_group_attachment" {
   #autoscaling_group_name = aws_eks_node_group.testeksclusternode.name
   lb_target_group_arn   = aws_alb_target_group.my_target_group.arn
+    depends_on = [aws_alb_target_group.my_target_group]
 }
