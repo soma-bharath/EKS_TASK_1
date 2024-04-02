@@ -41,3 +41,7 @@ data "aws_subnet" "public_subnets"{
   for_each=toset(data.aws_subnets.public.ids)
   id = each.value
 }
+
+data "aws_autoscaling_groups" "eks_asg" {
+  names = ["eks-test-eks*"]
+}
