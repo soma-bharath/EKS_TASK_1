@@ -4,7 +4,7 @@ resource "aws_launch_template" "example" {
   instance_type = "t2.micro"
 
   iam_instance_profile {
-    arn = aws_iam_role.Amazon_EKS_NodeRole.arn
+    name = aws_iam_role.Amazon_EKS_NodeRole.name
   }
 
   user_data = <<-EOF
