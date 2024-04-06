@@ -25,9 +25,10 @@ resource "aws_lb_listener" "my_listener" {
     target_group_arn = aws_lb_target_group.my_target_group.arn
   }
 }
-
+/*
 resource "aws_autoscaling_attachment" "eks_node_group_attachment" {
   autoscaling_group_name = data.aws_autoscaling_groups.eks_asg.name
   lb_target_group_arn   = aws_alb_target_group.my_target_group.arn
 
 }
+*/
