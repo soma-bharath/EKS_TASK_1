@@ -7,6 +7,8 @@ resource "aws_launch_template" "example" {
     name = aws_iam_role.Amazon_EKS_NodeRole.name
   }
 
+  user_data = filebase64("${path.module}/kubesetup.sh")
+  /*
   user_data = <<-EOF
               #!/bin/bash
               mkdir /home/ec2-user/localpath
@@ -26,7 +28,7 @@ resource "aws_launch_template" "example" {
               sudo aws eks --region us-west-2 update-kubeconfig --name test-eks-cluster
               kubectl create namespace kumar
               EOF
-
+*/
   block_device_mappings {
     device_name = "/dev/xvda"
 
