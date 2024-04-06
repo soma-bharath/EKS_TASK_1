@@ -35,4 +35,5 @@ resource "aws_launch_template" "example" {
       volume_type = "gp2"
     }
   }
+   depends_on = [aws_eks_cluster.testekscluster,aws_eks_node_group.testeksclusternode]
 }
