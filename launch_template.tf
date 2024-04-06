@@ -3,10 +3,10 @@ resource "aws_launch_template" "example" {
   image_id      = "ami-0395649fbe870727e"
   instance_type = "t2.micro"
 
-  iam_instance_profile {
+  /*iam_instance_profile {
     name = aws_iam_role.Amazon_EKS_NodeRole.name
   }
-
+*/
   user_data = filebase64("${path.module}/kubesetup.sh")
   /*
   user_data = <<-EOF
