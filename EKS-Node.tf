@@ -11,7 +11,7 @@ resource "aws_eks_node_group" "testeksclusternode" {
     Name = "test-eks-nodegroup-1"
   }
 
-  version = "1.28"
+  #version = "1.28"
   scaling_config {
     desired_size = 3
     max_size     = 6
