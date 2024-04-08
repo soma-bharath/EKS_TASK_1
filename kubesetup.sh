@@ -9,4 +9,4 @@ gpgkey=https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key
 EOF
 sudo yum install -y kubectl
 sudo aws eks --region us-west-2 update-kubeconfig --name test-eks-cluster
-kubectl create namespace kumar
+sudo kubectl create namespace kumar
