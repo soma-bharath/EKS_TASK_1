@@ -23,8 +23,8 @@ DOC
 resource "aws_ssm_association" "execute_script" {
   name = "execute_script_association"
   targets {
-    key    = "tag:eks-node-group"
-    values = [aws_eks_node_group.testeksclusternode.name]    # ["eks-node-group"] 
+    key    = "tag: Name"
+    values = ["test-eks-nodegroup-1"]    # ["eks-node-group"] 
   }
   document_version = "$LATEST"
   parameters       = {}
