@@ -28,8 +28,8 @@ resource "aws_ssm_association" "associate"{
 name = aws_ssm_document.document.name
 targets {
 
-    key    = "tag: Name"
-    values = ["test-eks-nodegroup-1"]
+    key    = "tag:eks:cluster-name"
+    values = ["test-eks-cluster"]
 }
 depends_on=[aws_eks_cluster.testekscluster,aws_eks_node_group.testeksclusternode,aws_ssm_document.document]
 }
