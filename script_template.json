@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "2.2",
+  "description": "Run a shell script",
+  "parameters": {},
+  "runtimeConfig": {
+    "aws:runShellScript": {
+      "properties": [
+        {
+          "id": "0.aws:runShellScript",
+          "runCommand": ["${path.module}/kubesetup.sh"] 
+        }
+      ]
+    }
+  }
+}
