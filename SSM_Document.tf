@@ -1,32 +1,33 @@
-data "template_file" "shell_script_content" {
-  template = file("${path.module}/kubesetup.sh")
-}
-
-# Create an SSM document for the shell script
-resource "aws_ssm_document" "shell_script" {
-  name          = "RunShellScript"
+resource "aws_ssm_document" "document" {
+  name          = "test_document"
   document_type = "Command"
-  content = jsonencode({
-    schemaVersion = "1.0"
-    description   = "Runs a shell script"
-    runtimeConfig = {
-      "aws:runShellScript" = {
-        properties = [
+
+  content = <<DOC
+  {
+    "schemaVersion": "1.2",
+    "description": "Check ip configuration of a Linux instance.",
+    "parameters": {
+
+    },
+    "runtimeConfig": {
+      "aws:runShellScript": {
+        "properties": [
           {
-            id          = "0.aws:runShellScript"
-            shellScript = data.template_file.shell_script_content.rendered
+            "id": "0.aws:runShellScript",
+            "runCommand": ["#!/bin/bash","cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo","[kubernetes]","name=Kubernetes","baseurl=https://pkgs.k8s.io/core:/stable:/v1.28/rpm/","enabled=1","gpgcheck=1","gpgkey=https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key","EOF","sudo yum install -y kubectl","sudo yum install -y docker","sudo systemctl start docker","sudo systemctl enable docker","sudo docker pull python"]
           }
         ]
       }
     }
-  })
-}
-# Create an association to execute the shell script
-resource "aws_ssm_association" "shell_script_association" {
-  name          = "run-shell-script"
-    targets {
-    key    = "tag: Name"
-    values = ["test-eks-nodegroup-1"]    # ["eks-node-group"] 
   }
-  document_version = "$LATEST"
+DOC
+}
+
+resource "aws_ssm_association" "associate"{
+name = aws_ssm_document.document.name
+targets {
+    key    = "tag: Name"
+    values = ["test-eks-nodegroup-1"]
+}
+
 }
