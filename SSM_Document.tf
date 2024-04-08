@@ -11,7 +11,7 @@ resource "aws_ssm_document" "shell_script" {
       "properties": [
         {
           "id": "0.aws:runShellScript",
-          "runCommand": ["your_script.sh"]
+          "runCommand": ["${path.module}/kubesetup.sh"]
         }
       ]
     }
