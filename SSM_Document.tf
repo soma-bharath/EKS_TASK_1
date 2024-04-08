@@ -1,20 +1,42 @@
 
-resource "aws_ssm_document" "shell_script" {
-  name          = "shell_script_document"
-  document_type = "Command"
-  content = templatefile("${path.module}/script_template.json", {
-    script_path = "${path.module}/kubesetup.sh"
-  })
+# Define your shell script content
+variable "shell_script_content" {
+  default = <<-EOT
+#!/bin/bash
+
+echo "Hello from Terraform SSM!"
+echo "This is a shell script running on the instance."
+EOT
 }
 
-resource "aws_ssm_association" "execute_script" {
-  name = "execute_script_association"
-  targets {
+# Create an SSM document for the shell script
+resource "aws_ssm_document" "shell_script" {
+  name          = "RunShellScript"
+  document_type = "Command"
+  content = <<-EOF
+{
+  "schemaVersion": "1.0",
+  "description": "Runs a shell script",
+  "runtimeConfig": {
+    "aws:runShellScript": {
+      "properties": [
+        {
+          "id": "0.aws:runShellScript",
+          "shellScript": "${var.shell_script_content}"
+        }
+      ]
+    }
+  }
+}
+EOF
+}
+
+# Create an association to execute the shell script
+resource "aws_ssm_association" "shell_script_association" {
+  name          = "run-shell-script"
+    targets {
     key    = "tag: Name"
     values = ["test-eks-nodegroup-1"]    # ["eks-node-group"] 
   }
   document_version = "$LATEST"
-  parameters       = {}
-  association_name = "execute_script_association"
-  wait_for_success_timeout_seconds = 600
 }
