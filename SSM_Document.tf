@@ -1,23 +1,10 @@
+
 resource "aws_ssm_document" "shell_script" {
   name          = "shell_script_document"
   document_type = "Command"
-  content = <<DOC
-{
-  "schemaVersion": "2.2",
-  "description": "Run a shell script",
-  "parameters": {},
-  "runtimeConfig": {
-    "aws:runShellScript": {
-      "properties": [
-        {
-          "id": "0.aws:runShellScript",
-          "runCommand": ["${path.module}/kubesetup.sh"]
-        }
-      ]
-    }
-  }
-}
-DOC
+  content = templatefile("${path.module}/script_template.json", {
+    script_path = "${path.module}/kubesetup.sh"
+  })
 }
 
 resource "aws_ssm_association" "execute_script" {
