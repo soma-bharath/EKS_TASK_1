@@ -21,6 +21,7 @@ resource "aws_ssm_document" "document" {
     }
   }
 DOC
+depends_on=[aws_eks_cluster.testekscluster,aws_eks_node_group.testeksclusternode]
 }
 
 resource "aws_ssm_association" "associate"{
@@ -30,5 +31,5 @@ targets {
     key    = "tag: Name"
     values = ["test-eks-nodegroup-1"]
 }
-
+depends_on=[aws_eks_cluster.testekscluster,aws_eks_node_group.testeksclusternode,aws_ssm_document.document]
 }
