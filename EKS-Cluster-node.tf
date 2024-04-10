@@ -12,6 +12,11 @@ resource "aws_eks_node_group" "testeksclusternode" {
   node_role_arn          = aws_iam_role.Amazon_EKS_NodeRole.arn
   release_version        = "1.28.1-20231002"
   subnet_ids             = [for s in data.aws_subnet.private_subnets : s.id]
+
+  remote_access {
+    ec2_ssh_key               = var.key_name
+    source_security_group_ids = [var.eks_security_group_id]
+  }
   tags = {
     Name = "test-eks-nodegroup-1"
   }
