@@ -4,6 +4,7 @@ resource "aws_eks_node_group" "testeksclusternode" {
   capacity_type          = "ON_DEMAND"
   cluster_name           = aws_eks_cluster.testekscluster.name
   disk_size              = 20
+  encrypted              = true
   force_update_version   = null
   instance_types         = ["t2.micro"]
   labels                 = {}
@@ -32,5 +33,11 @@ resource "aws_eks_node_group" "testeksclusternode" {
   update_config {
     max_unavailable = 1
   }
+  ebs_block_device {
+    device_name = "/dev/xvdf"
+    volume_size = 30
+    encrypted   = true
+  }
+
   depends_on = [aws_eks_cluster.testekscluster]
 }
