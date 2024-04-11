@@ -1,7 +1,9 @@
 resource "aws_eks_node_group" "testeksclusternode" {
+  ami_type               = "AL2_x86_64"
+  capacity_type          = "ON_DEMAND"
+  instance_types         = ["t2.micro"]
   cluster_name    = aws_eks_cluster.testekscluster.name
   node_group_name = "test-eks-nodegroup-1"
-  #release_version        = "1.28.1-20231002"
   node_role_arn          = aws_iam_role.Amazon_EKS_NodeRole.arn
   subnet_ids             = [for s in data.aws_subnet.private_subnets : s.id]
   tags = {
