@@ -5,7 +5,7 @@ resource "aws_launch_template" "example" {
 
   #user_data = filebase64("${path.module}/kubesetup.sh")
 
-security_group_names = [data.aws_security_group.EKS-Security-Group.id]
+security_group_names = [data.aws_security_group.EKS-Security-Group.name]
 
   block_device_mappings {
     device_name = "/dev/xvda"
