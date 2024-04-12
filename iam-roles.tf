@@ -78,3 +78,15 @@ resource "aws_iam_role_policy_attachment" "glue_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
   role       = aws_iam_role.glue_role.name
 }
+
+resource "aws_iam_role" "Amazon_EC2_EKS" {
+  assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
+  description           = "Allows EC2 instances to call AWS services on your behalf."
+  force_detach_policies = false
+  managed_policy_arns   = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+  max_session_duration  = 3600
+  name                  = "AmazonEC2EKS"
+  name_prefix           = null
+  path                  = "/"
+  permissions_boundary  = null
+}
