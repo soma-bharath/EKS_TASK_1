@@ -90,3 +90,8 @@ resource "aws_iam_role" "Amazon_EC2_EKS" {
   path                  = "/"
   permissions_boundary  = null
 }
+
+resource "aws_iam_instance_profile" "EKS-EC2" {
+  name = "EKS-EC2"
+  role = aws_iam_role.Amazon_EC2_EKS.id
+}
