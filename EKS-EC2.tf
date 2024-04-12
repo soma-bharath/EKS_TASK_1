@@ -22,6 +22,11 @@ resource "aws_instance" "my_ec2" {
     destination = "/home/ec2-user/.ssh/configHost"
   }
 
+    provisioner "file" {
+    source      = "${path.module}/role.yaml"
+    destination = "/home/ec2-user/role.yaml"
+  }
+
   user_data = <<EOF
 #!/bin/bash
 set -x
