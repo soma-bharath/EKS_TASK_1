@@ -5,6 +5,7 @@ resource "aws_instance" "my_ec2" {
   subnet_ids             = [for s in data.aws_subnet.private_subnets : s.id]
   vpc_security_group_ids = [data.aws_security_group.EKS-Security-Group.id]
   key_name        = aws_key_pair.Node_key_pair.key_name
+ iam_instance_profile = aws_iam_instance_profile.example_profile.name
   connection {
     type        = "ssh"
     user        = "ec2-user"
