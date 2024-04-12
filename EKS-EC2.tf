@@ -40,7 +40,8 @@ gpgcheck=1
 gpgkey=https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key
 EOFR
 sudo yum install -y kubectl
-sudo chmod 700 /home/ec2-user/.ssh/TF.pem
+sudo aws eks --region us-west-2 update-kubeconfig --name test-eks-cluster
+sudo chmod 700 /home/ec2-user/.ssh/Node-key.pem
 sudo cp ${path.module}/configHost ~/.ssh/
 EOF
   tags = {
