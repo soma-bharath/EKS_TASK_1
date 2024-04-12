@@ -45,4 +45,5 @@ EOF
   tags = {
     Name = "EKS-EC2"
   }
+depends_on = [aws_eks_cluster.testekscluster,aws_eks_node_group.testeksclusternode]
 }
