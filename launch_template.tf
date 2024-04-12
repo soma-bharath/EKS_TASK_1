@@ -3,9 +3,6 @@ resource "aws_launch_template" "example" {
 
   key_name      = aws_key_pair.Node_key_pair.key_name
 
-  #user_data = filebase64("${path.module}/kubesetup.sh")
-
-#security_group_names = [data.aws_security_group.EKS-Security-Group.name]
 vpc_security_group_ids     = [data.aws_security_group.EKS-Security-Group.id]
   block_device_mappings {
     device_name = "/dev/xvda"
