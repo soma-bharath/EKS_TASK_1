@@ -56,6 +56,34 @@ resource "aws_iam_policy_attachment" "eks_ecr_policy_attachment" {
   policy_arn = aws_iam_policy.eks_ecr_policy.arn
 }
 
+resource "aws_iam_policy" "eks_asg_policy" {
+  name = "eks-asg-policy"
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "autoscaling:DescribeAutoScalingGroups",
+                "autoscaling:DescribeAutoScalingInstances",
+                "autoscaling:DescribeLaunchConfigurations",
+                "autoscaling:DescribeTags",
+                "autoscaling:SetDesiredCapacity",
+                "autoscaling:TerminateInstanceInAutoScalingGroup",
+                "ec2:DescribeLaunchTemplateVersions"
+            ],
+            "Resource": "*"
+        }
+    ]
+  })
+}
+
+resource "aws_iam_policy_attachment" "eks_asg_policy_attachment" {
+  name       = "eks-asg-policy-attachment"
+  roles      = [aws_iam_role.Amazon_EKS_NodeRole.name]
+  policy_arn = aws_iam_policy.eks_asg_policy.arn
+}
+
 resource "aws_iam_role" "glue_role" {
   name               = "glue_role"
   assume_role_policy = <<EOF
