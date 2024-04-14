@@ -52,7 +52,12 @@ data "aws_subnet" "public_subnets"{
   for_each=toset(data.aws_subnets.public.ids)
   id = each.value
 }
-
+/*
+data "aws_kms_key" "my_key" {
+  key_id = "arn:aws:kms:region:account-id:key/key-id" #enter your existing kms key id
+}
+*/
 data "aws_autoscaling_groups" "eks_asg" {
   names = ["eks-test-eks*"]
 }
+
