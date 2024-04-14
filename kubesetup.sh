@@ -10,5 +10,3 @@ EOF
 sudo yum install -y kubectl
 sudo aws eks --region us-west-2 update-kubeconfig --name test-eks-cluster
 kubectl create namespace kumar
-sudo kubectl apply -f cluster-autoscalar-autodiscover.yaml
-sudo kubectl -n kube-system annotate deployment.apps/cluster-autoscaler cluster-autoscaler.kubernetes.io/safe-to-evict="false"
