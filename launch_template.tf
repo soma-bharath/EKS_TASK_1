@@ -11,6 +11,7 @@ vpc_security_group_ids     = [data.aws_security_group.EKS-Security-Group.id]
       volume_type = "gp2"
       delete_on_termination = true
       encrypted             = true
+      #kms_key_id            = data.aws_kms_key.my_key.arn # Reference to the KMS key ARN
     }
   }
 
@@ -21,6 +22,7 @@ vpc_security_group_ids     = [data.aws_security_group.EKS-Security-Group.id]
       volume_type = "gp2"
       delete_on_termination = true
       encrypted             = true
+      #kms_key_id            = data.aws_kms_key.my_key.arn # Reference to the KMS key ARN
     }
   }
 
