@@ -17,7 +17,7 @@ resource "null_resource" "kubectl_setup" {
     command = <<EOT
       sudo chmod 777 kubesetup.sh
       sudo bash ${path.module}/kubesetup.sh
-      sudo kubectl apply -f ${path.module}/cluster-autoscalar-autodiscover.yaml
+      sudo kubectl apply -f ${path.module}/cluster-autoscaler-autodiscover.yaml
       sudo kubectl -n kube-system annotate deployment.apps/cluster-autoscaler cluster-autoscaler.kubernetes.io/safe-to-evict="false"
     EOT
   }
