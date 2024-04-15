@@ -56,11 +56,13 @@ data "aws_subnet" "public_subnets"{
 data "aws_kms_key" "my_key" {
   key_id = "arn:aws:kms:region:account-id:key/key-id" #enter your existing kms key id
 }
+*/
 
 data "aws_autoscaling_groups" "eks_asg" {
-  tags={
-
+  filter {
+name="tag:kubernetes.io/cluster/test-eks-cluster"
+values=["owned"]
 }
+depends_on =[aws_eks_node_group.testeksclusternode]
 }
-*/
 
