@@ -12,4 +12,10 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_alarm" {
     ClusterName = aws_eks_cluster.testekscluster.name
   }
   alarm_actions = [aws_sns_topic.EKS_SNS.arn]
+
+  tags = {
+    Name = "eks_worker_nodes_cpu_utilization_alarm"
+    Date = local.current_date
+    Env  = var.env
+  }
 }
