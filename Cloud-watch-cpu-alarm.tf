@@ -9,7 +9,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_alarm" {
   threshold           = "80"
   alarm_description   = "Alarm when CPU utilization exceeds 80% on EKS worker nodes"
   dimensions = {
-    ClusterName = aws_eks_cluster.testekscluster.name
+    cluste-name = aws_eks_cluster.testekscluster.name
   }
   alarm_actions = [aws_sns_topic.EKS_SNS.arn]
 
