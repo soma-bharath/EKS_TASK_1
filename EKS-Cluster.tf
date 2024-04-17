@@ -3,9 +3,13 @@ resource "aws_eks_cluster" "testekscluster" {
   role_arn = aws_iam_role.Eks_Cluster_Role.arn
   tags = {
     Name = "test-eks-cluster"
+    Date = local.current_date
+    Env  = var.env
   }
   tags_all = {
     Name = "test-eks-cluster"
+    Date = local.current_date
+    Env  = var.env
   }
   version = "1.28"
   kubernetes_network_config {

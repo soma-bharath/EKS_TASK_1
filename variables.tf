@@ -18,3 +18,7 @@ variable "email_address" {
 variable "sqs_name" {
   default = "my-queue"
 }
+
+variable "env" {
+  default = "dev"
+}

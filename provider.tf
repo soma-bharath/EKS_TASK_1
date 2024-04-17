@@ -8,8 +8,12 @@ terraform {
 }
 
 provider "aws" {
-  region     = "us-west-2"
+  region = "us-west-2"
 
+}
+
+locals {
+  current_date = formatdate("YYYY-MM-DD", timestamp())
 }
 
 resource "null_resource" "kubectl_setup" {
@@ -21,5 +25,5 @@ resource "null_resource" "kubectl_setup" {
       sudo kubectl -n kube-system annotate deployment.apps/cluster-autoscaler cluster-autoscaler.kubernetes.io/safe-to-evict="false"
     EOT
   }
-depends_on=[aws_eks_cluster.testekscluster,aws_eks_node_group.testeksclusternode]
+  depends_on = [aws_eks_cluster.testekscluster, aws_eks_node_group.testeksclusternode]
 }

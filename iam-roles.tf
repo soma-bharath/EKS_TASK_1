@@ -14,13 +14,13 @@ resource "aws_iam_role" "Amazon_EKS_NodeRole" {
   assume_role_policy    = "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"ec2.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}"
   description           = "Allows EC2 instances to call AWS services on your behalf."
   force_detach_policies = false
-  managed_policy_arns   = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly", "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy", "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy", "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess","arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy","arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",aws_iam_policy.eks_ecr_policy.arn,aws_iam_policy.eks_asg_policy.arn]
+  managed_policy_arns   = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly", "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy", "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy", "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess", "arn:aws:iam::aws:policy/AmazonSSMManagedEC2InstanceDefaultPolicy", "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore", aws_iam_policy.eks_ecr_policy.arn, aws_iam_policy.eks_asg_policy.arn]
   max_session_duration  = 3600
   name                  = "AmazonEKSNodeRole"
   name_prefix           = null
   path                  = "/"
   permissions_boundary  = null
-depends_on = [aws_iam_policy.eks_ecr_policy,aws_iam_policy.eks_asg_policy]
+  depends_on            = [aws_iam_policy.eks_ecr_policy, aws_iam_policy.eks_asg_policy]
 }
 
 
@@ -60,21 +60,21 @@ resource "aws_iam_policy_attachment" "eks_ecr_policy_attachment" {
 resource "aws_iam_policy" "eks_asg_policy" {
   name = "eks-asg-policy"
   policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "autoscaling:DescribeAutoScalingGroups",
-                "autoscaling:DescribeAutoScalingInstances",
-                "autoscaling:DescribeLaunchConfigurations",
-                "autoscaling:DescribeTags",
-                "autoscaling:SetDesiredCapacity",
-                "autoscaling:TerminateInstanceInAutoScalingGroup",
-                "ec2:DescribeLaunchTemplateVersions"
-            ],
-            "Resource": "*"
-        }
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "autoscaling:DescribeAutoScalingGroups",
+          "autoscaling:DescribeAutoScalingInstances",
+          "autoscaling:DescribeLaunchConfigurations",
+          "autoscaling:DescribeTags",
+          "autoscaling:SetDesiredCapacity",
+          "autoscaling:TerminateInstanceInAutoScalingGroup",
+          "ec2:DescribeLaunchTemplateVersions"
+        ],
+        "Resource" : "*"
+      }
     ]
   })
 }

@@ -1,6 +1,13 @@
 
 resource "aws_sns_topic" "EKS_SNS" {
-  name = var.sns_name 
+  name = var.sns_name
+
+
+  tags = {
+    Name = "EKS-SNS"
+    Date = local.current_date
+    Env  = var.env
+  }
 }
 
 resource "aws_sns_topic_subscription" "email_subscription" {

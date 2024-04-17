@@ -2,7 +2,7 @@ resource "aws_ssm_document" "document" {
   name          = "test_document"
   document_type = "Command"
 
-  content = <<DOC
+  content    = <<DOC
   {
     "schemaVersion": "1.2",
     "description": "Check ip configuration of a Node instance.",
@@ -21,15 +21,15 @@ resource "aws_ssm_document" "document" {
     }
   }
 DOC
-depends_on=[aws_eks_cluster.testekscluster,aws_eks_node_group.testeksclusternode]
+  depends_on = [aws_eks_cluster.testekscluster, aws_eks_node_group.testeksclusternode]
 }
 
-resource "aws_ssm_association" "associate"{
-name = aws_ssm_document.document.name
-targets {
+resource "aws_ssm_association" "associate" {
+  name = aws_ssm_document.document.name
+  targets {
 
     key    = "tag:eks:cluster-name"
     values = ["test-eks-cluster"]
-}
-depends_on=[aws_eks_cluster.testekscluster,aws_eks_node_group.testeksclusternode,aws_ssm_document.document]
+  }
+  depends_on = [aws_eks_cluster.testekscluster, aws_eks_node_group.testeksclusternode, aws_ssm_document.document]
 }
